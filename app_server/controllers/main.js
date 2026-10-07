@@ -1,8 +1,14 @@
 /* GET home page */
 const index = function(req, res){ 
-res.render('index'); 
+res.render('login', { title: 'Login' }); 
+};
+
+/* GET register page */
+const register = function(req, res){
+res.render('register', { title: 'Register' });
 };
 
 module.exports = { 
-index
+index,
+register
 };
