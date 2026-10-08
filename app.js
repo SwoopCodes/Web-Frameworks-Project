@@ -1,3 +1,4 @@
+const { connectToMongoDB } = require('./app_server/models/db');
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -7,6 +8,7 @@ var logger = require('morgan');
 const indexRouter = require('./app_server/routes/index');
 const usersRouter = require('./app_server/routes/users');
 
+connectToMongoDB();
 
 var app = express();
 
