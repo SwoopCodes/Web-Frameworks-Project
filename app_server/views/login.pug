@@ -4,7 +4,7 @@ block content
   .container.py-5
     .row.justify-content-center
       .col-12.col-md-8.col-lg-5.text-center
-        form.onboard 
+        form.onboard(method='POST' action='/login')
           .mb-3
             h1 Login
             label.form-label(for='username') username
@@ -12,5 +12,7 @@ block content
           .mb-3
             label.form-label(for='password') Password
             input#password.form-control(type='password' name='password')
+          if error
+            p.text-danger= error
           button.btn.btn-primary(type='submit') Sign in
           p.mt-3 New here? #[a.text-decoration-underline(href='/register') Register]
