@@ -1,0 +1,5 @@
+References for front-end components
+
+Login / Register form layout (Bootstrap forms): https://getbootstrap.com/docs/5.3/forms/overview/
+Page layout / styling (MDB UI Kit, used in layout.pug): https://mdbootstrap.com/docs/standard/
+Dashboard page container (Bootstrap containers): https://getbootstrap.com/docs/5.3/layout/containers/
