@@ -1,5 +1,28 @@
 extends layout
 
 block content
-  .container.py-5
-    h1 Dashboard
+  nav.navbar.navbar-expand.navbar-dark.bg-dark
+    .container-fluid
+      span.navbar-brand Car Builds
+      ul.navbar-nav.me-auto
+        li.nav-item
+          a.nav-link.active(href='/dashboard') Home
+      a.btn.btn-outline-light(href='/') Log out
+  .container.py-4
+    h1.mb-4 Browse Builds
+    .row
+      each build in builds
+        .col-12.col-md-6.col-lg-4.mb-4
+          .card.h-100.text-white
+            if build.imageUrl
+              img.card-img-top(src=build.imageUrl, alt='Car build image')
+            else
+              .bg-light.text-center.py-5
+                i.fa-regular.fa-image.fa-4x.text-secondary
+            .card-body
+              h5.card-title.fw-bold= build.carTitle
+              p.card-subtitle.text-white-50.mb-3 By #{build.owner}
+              h6= build.category
+              ul
+                each mod in build.modifications
+                  li= mod

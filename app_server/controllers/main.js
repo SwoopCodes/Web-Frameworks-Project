@@ -19,8 +19,19 @@ res.render('login', { title: 'Login', error: 'Incorrect username or password' })
 };
 
 /* GET dashboard page */
-const dashboard = function(req, res){
-res.render('dashboard', { title: 'Dashboard' });
+const dashboard = async function(req, res){
+/* get the builds from our own API */
+const url = req.protocol + '://' + req.get('host') + '/api/builds';
+let builds = [];
+try {
+const response = await fetch(url);
+if (response.ok) {
+builds = await response.json();
+}
+} catch (err) {
+console.log('Could not load builds: ' + err.message);
+}
+res.render('dashboard', { title: 'Browse Builds', builds });
 };
 
 /* GET register page */
