@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{baseUrl}}/api/builds"
+method: GET
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status code is 200", () => pm.response.to.have.status(200));
+      pm.test("Response is JSON", () => pm.response.to.be.json);
+      pm.test("Returns 4 builds", () => pm.expect(pm.response.json()).to.have.lengthOf(4));
+      pm.test("Each build has a carTitle, owner and modifications", () => pm.response.json().forEach(b => pm.expect(b).to.include.keys("carTitle","owner","modifications")));
+    language: text/javascript
+order: 1000

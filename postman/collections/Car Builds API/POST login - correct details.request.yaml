@@ -1,0 +1,21 @@
+$kind: http-request
+url: "{{baseUrl}}/login"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "username": "user",
+      "password": "user"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status code is 302 (redirect)", () => pm.response.to.have.status(302));
+      pm.test("Redirects to the dashboard", () => pm.expect(pm.response.headers.get("Location")).to.eql("/dashboard"));
+    language: text/javascript
+settings:
+  followRedirects: false
+order: 2000
