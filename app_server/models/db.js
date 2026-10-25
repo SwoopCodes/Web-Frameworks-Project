@@ -17,4 +17,4 @@ async function disconnectFromMongoDB() {
 }
 
 module.exports = { connectToMongoDB, disconnectFromMongoDB };
-require('./locations');
+require('./schema.js');
