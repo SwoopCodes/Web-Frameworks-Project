@@ -1,8 +1,13 @@
-/* Hard-coded login details */
+/* Login details are read from the environment, not hard-coded in source. */
+try { require('dotenv').config(); } catch (_) { /* dotenv not installed; rely on process.env */ }
+
 const mockUser = {
-username: 'user',
-password: 'REDACTED'
+username: process.env.APP_USERNAME,
+password: process.env.APP_PASSWORD
 };
+if (!mockUser.username || !mockUser.password) {
+throw new Error('APP_USERNAME and APP_PASSWORD environment variables must be set for login.');
+}
 
 /* GET home page */
 const index = function(req, res){
