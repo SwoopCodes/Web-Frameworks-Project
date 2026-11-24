@@ -1,0 +1,16 @@
+$kind: http-request
+url: "{{baseUrl}}/api/builds/{{buildId}}"
+method: GET
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status code is 200", () => pm.response.to.have.status(200));
+      pm.test("Response is JSON", () => pm.response.to.be.json);
+      pm.test("Returns the build with the saved id", function () {
+        pm.expect(pm.response.json()._id).to.eql(pm.collectionVariables.get("buildId"));
+      });
+      pm.test("Build has a carTitle", function () {
+        pm.expect(pm.response.json()).to.include.keys("carTitle");
+      });
+    language: text/javascript
+order: 1100

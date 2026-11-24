@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{baseUrl}}/api/builds/000000000000000000000000"
+method: GET
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status code is 404", () => pm.response.to.have.status(404));
+      pm.test("Response is JSON", () => pm.response.to.be.json);
+      pm.test("Message says the build was not found", function () {
+        pm.expect(pm.response.json().message).to.eql("Build not found");
+      });
+    language: text/javascript
+order: 1300

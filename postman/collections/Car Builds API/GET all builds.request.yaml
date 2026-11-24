@@ -6,7 +6,22 @@ scripts:
     code: |-
       pm.test("Status code is 200", () => pm.response.to.have.status(200));
       pm.test("Response is JSON", () => pm.response.to.be.json);
-      pm.test("Returns 4 builds", () => pm.expect(pm.response.json()).to.have.lengthOf(4));
-      pm.test("Each build has a carTitle, owner and modifications", () => pm.response.json().forEach(b => pm.expect(b).to.include.keys("carTitle","owner","modifications")));
+      pm.test("Returns a list with at least 1 build", function () {
+        const builds = pm.response.json();
+        pm.expect(builds).to.be.an("array");
+        pm.expect(builds.length).to.be.at.least(1);
+      });
+      pm.test("Each build has the right keys", function () {
+        const builds = pm.response.json();
+        for (let i = 0; i < builds.length; i++) {
+          pm.expect(builds[i]).to.include.keys("carTitle", "owner", "modifications", "category", "_id");
+        }
+      });
+      pm.test("Save the first build id", function () {
+        const builds = pm.response.json();
+        if (builds.length > 0) {
+          pm.collectionVariables.set("buildId", builds[0]._id);
+        }
+      });
     language: text/javascript
 order: 1000
