@@ -1,6 +1,6 @@
-const { MongoClient } = require('mongodb');
+const mongoose = require('mongoose');
 
-try { require('dotenv').config(); } catch (_) { /* dotenv not installed; rely on process.env */ }
+require('dotenv').config();
 
 const uri = process.env.MONGODB_URI;
 if (!uri) {
@@ -9,20 +9,17 @@ if (!uri) {
   );
 }
 
-const client = new MongoClient(uri);
-
 async function connectToMongoDB() {
   try {
-    await client.connect();
+    await mongoose.connect(uri);
     console.log("You successfully connected to MongoDB!");
-    return client;
-  } catch (err) {
-    console.dir(err);
+  } catch (error) {
+    console.log(error.message);
   }
 }
 
 async function disconnectFromMongoDB() {
-  await client.close();
+  await mongoose.disconnect();
 }
 
 module.exports = { connectToMongoDB, disconnectFromMongoDB };
