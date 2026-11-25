@@ -10,10 +10,10 @@ function sendError(error, res) {
   }
 }
 
-/* GET all builds as JSON, newest first */
+/* GET all builds as JSON */
 const getBuilds = async function(req, res){
   try {
-    const builds = await Build.find().sort({ createdOn: -1 });
+    const builds = await Build.find();
     res.status(200).json(builds);
   } catch (error) {
     sendError(error, res);
@@ -36,5 +36,5 @@ const getOneBuild = async function(req, res){
 
 module.exports = {
   getBuilds,
-  getOneBuild
+  getOneBuild,
 };
