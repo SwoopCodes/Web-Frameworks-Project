@@ -10,6 +10,10 @@ block content
       a.btn.btn-outline-light(href='/') Log out
   .container.py-4
     h1.mb-4 Browse Builds
+    if error_msg
+      .alert.alert-danger(role='alert')= error_msg
+    else if builds.length === 0
+      p No builds yet.
     .row
       each build in builds
         .col-12.col-md-6.col-lg-4.mb-4
