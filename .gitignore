@@ -59,3 +59,8 @@ typings/
 
 # next.js build output
 .next
+
+# Angular app (app_public)
+app_public/build
+app_public/node_modules
+app_public/.angular
