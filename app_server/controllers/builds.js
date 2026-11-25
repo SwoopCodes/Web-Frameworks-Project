@@ -13,7 +13,24 @@ function sendError(error, res) {
 /* GET all builds as JSON */
 const getBuilds = async function(req, res){
   try {
-    const builds = await Build.find();
+    const category = req.query.category;
+    let builds;
+    if (!category) {
+      builds = await Build.find();
+    } else {
+      const allowed = ['Exterior', 'Engine', 'Interior', 'Other'];
+      let found = false;
+      for (let i = 0; i < allowed.length; i++) {
+        if (allowed[i] === category) {
+          found = true;
+        }
+      }
+      if (found === false) {
+        res.status(400).json({ message: 'Invalid category. Use Exterior, Engine, Interior or Other' });
+        return;
+      }
+      builds = await Build.find({ category: category });
+    }
     res.status(200).json(builds);
   } catch (error) {
     sendError(error, res);
