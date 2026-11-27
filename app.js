@@ -9,6 +9,7 @@ const MongoStore = require('connect-mongo').MongoStore;
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('./app_server/models/users');
+const flash = require('connect-flash');
 
 const indexRouter = require('./app_server/routes/index');
 const usersRouter = require('./app_server/routes/users');
@@ -38,6 +39,11 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
+app.use(function(req, res, next) {
+  res.locals.error = req.flash('error');
+  next();
+});
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
